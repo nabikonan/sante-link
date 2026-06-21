@@ -1,0 +1,18 @@
+# Fichiers sensibles — ne JAMAIS committer
+.env
+*.env.local
+
+# Cache et logs
+/logs/
+*.log
+
+# Modèles IA sauvegardés (peuvent contenir des données)
+ia/models/
+
+# Dépendances Python
+__pycache__/
+*.pyc
+ia/venv/
+
+# PDF temporaires générés
+export/tmp/

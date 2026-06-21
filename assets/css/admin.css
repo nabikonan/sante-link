@@ -1,0 +1,116 @@
+/* ── DiabSuivi — Thème admin (sombre, distinct du reste de l'app) ── */
+:root {
+    --adm-bg:     #0F1117;
+    --adm-bg2:    #1A1D29;
+    --adm-bg3:    #232736;
+    --adm-border: #2D3142;
+    --adm-txt:    #E8E9ED;
+    --adm-txt2:   #9CA3B5;
+    --adm-accent: #5B8DEF;
+    --adm-green:  #2DD4A7;
+    --adm-red:    #F25C5C;
+    --adm-amber:  #FBBF24;
+}
+
+.admin-body { background: var(--adm-bg); color: var(--adm-txt); }
+
+/* ── Navbar ── */
+.admin-navbar {
+    background: var(--adm-bg2);
+    border-bottom: 1px solid var(--adm-border);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100; gap: 16px; flex-wrap: wrap;
+}
+.admin-brand { color: var(--adm-txt); font-weight: 700; font-size: 15px;
+               text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.admin-nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+.admin-nav-link  { padding: 7px 12px; border-radius: 7px; color: var(--adm-txt2);
+                   text-decoration: none; font-size: 13px; transition: all .15s; }
+.admin-nav-link:hover { background: var(--adm-bg3); color: var(--adm-txt); text-decoration: none; }
+.admin-nav-user  { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+.admin-badge-role { font-size: 11px; background: rgba(91,141,239,.15); color: var(--adm-accent);
+                    padding: 3px 10px; border-radius: 20px; font-weight: 600; }
+
+.admin-main { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+/* ── Cards ── */
+.adm-card {
+    background: var(--adm-bg2);
+    border: 1px solid var(--adm-border);
+    border-radius: 12px;
+    padding: 20px;
+}
+.adm-stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+                gap: 14px; margin-bottom: 22px; }
+.adm-stat {
+    background: var(--adm-bg2); border: 1px solid var(--adm-border);
+    border-radius: 12px; padding: 18px;
+}
+.adm-stat-label { font-size: 11px; color: var(--adm-txt2); text-transform: uppercase;
+                  letter-spacing: .05em; margin-bottom: 8px; }
+.adm-stat-value { font-size: 28px; font-weight: 800; color: var(--adm-txt); line-height: 1; }
+.adm-stat-sub   { font-size: 12px; color: var(--adm-txt2); margin-top: 6px; }
+.adm-stat.accent-green  { border-color: rgba(45,212,167,.4); }
+.adm-stat.accent-red    { border-color: rgba(242,92,92,.4); }
+.adm-stat.accent-amber  { border-color: rgba(251,191,36,.4); }
+.adm-stat.accent-blue   { border-color: rgba(91,141,239,.4); }
+
+/* ── Tables ── */
+.adm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.adm-table th { text-align: left; font-size: 11px; text-transform: uppercase;
+               color: var(--adm-txt2); padding: 10px 12px; border-bottom: 2px solid var(--adm-border); }
+.adm-table td { padding: 11px 12px; border-bottom: 1px solid var(--adm-border); color: var(--adm-txt); }
+.adm-table tr:hover td { background: var(--adm-bg3); }
+.adm-table tr:last-child td { border-bottom: none; }
+
+/* ── Badges ── */
+.adm-badge { display: inline-flex; align-items: center; padding: 3px 10px;
+            border-radius: 20px; font-size: 11px; font-weight: 600; }
+.adm-badge-green  { background: rgba(45,212,167,.15); color: var(--adm-green); }
+.adm-badge-red    { background: rgba(242,92,92,.15);  color: var(--adm-red); }
+.adm-badge-amber  { background: rgba(251,191,36,.15); color: var(--adm-amber); }
+.adm-badge-blue   { background: rgba(91,141,239,.15); color: var(--adm-accent); }
+.adm-badge-gray   { background: rgba(156,163,181,.15); color: var(--adm-txt2); }
+
+/* ── Buttons ── */
+.adm-btn { display: inline-block; padding: 8px 16px; border-radius: 7px;
+          font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none;
+          border: 1px solid var(--adm-border); transition: all .15s; }
+.adm-btn-primary { background: var(--adm-accent); color: #fff; border-color: var(--adm-accent); }
+.adm-btn-primary:hover { background: #4A7CDB; text-decoration: none; color: #fff; }
+.adm-btn-danger  { background: rgba(242,92,92,.12); color: var(--adm-red); border-color: rgba(242,92,92,.3); }
+.adm-btn-danger:hover  { background: var(--adm-red); color: #fff; text-decoration: none; }
+.adm-btn-secondary { background: var(--adm-bg3); color: var(--adm-txt2); }
+.adm-btn-secondary:hover { background: var(--adm-border); color: var(--adm-txt); text-decoration: none; }
+.adm-btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* ── Forms ── */
+.adm-input, .adm-select {
+    background: var(--adm-bg3); border: 1px solid var(--adm-border);
+    color: var(--adm-txt); padding: 8px 12px; border-radius: 7px; font-size: 13px;
+}
+.adm-input:focus, .adm-select:focus { outline: none; border-color: var(--adm-accent); }
+
+/* ── Section title ── */
+.adm-section-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; color: var(--adm-txt); }
+.adm-section-sub    { font-size: 12px; color: var(--adm-txt2); margin-bottom: 18px; }
+
+/* ── Footer ── */
+.admin-footer { text-align: center; padding: 20px; font-size: 11px;
+               color: var(--adm-txt2); border-top: 1px solid var(--adm-border); margin-top: 30px; }
+
+/* ── Filter bar ── */
+.adm-filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; }
+
+/* ── Pills tab ── */
+.adm-tabs { display: flex; gap: 4px; margin-bottom: 18px; border-bottom: 1px solid var(--adm-border); }
+.adm-tab  { padding: 10px 16px; font-size: 13px; font-weight: 600; color: var(--adm-txt2);
+           cursor: pointer; border-bottom: 2px solid transparent; text-decoration: none; }
+.adm-tab.active { color: var(--adm-accent); border-bottom-color: var(--adm-accent); }
+.adm-tab:hover  { color: var(--adm-txt); text-decoration: none; }
+
+@media (max-width: 700px) {
+    .admin-navbar { flex-direction: column; align-items: flex-start; }
+    .admin-nav-links { width: 100%; }
+}
