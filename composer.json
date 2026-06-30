@@ -1,0 +1,19 @@
+{
+    "name": "diabsuivi/diabsuivi",
+    "description": "DiabSuivi - Application de suivi glycemique pour patients diabetiques",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.1",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "files": [
+            "config/app.php"
+        ]
+    }
+}
