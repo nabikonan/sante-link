@@ -1,20 +1,28 @@
 <?php
-// Inclure session si pas déjà fait
+/**
+ * DiabSuivi — En-tête commun (HTML head + navbar)
+ *
+ * Ce fichier prépare les données nécessaires (compteurs d'alertes et
+ * de messages) puis délègue l'affichage des liens de navigation au
+ * fichier dédié au rôle courant (includes/nav/patient.php ou
+ * includes/nav/medecin.php). Avant cette séparation, tous les liens
+ * des deux rôles vivaient ici avec des conditions if/else imbriquées.
+ */
 if (session_status() === PHP_SESSION_NONE) {
     require_once __DIR__ . '/session.php';
 }
 require_once __DIR__ . '/fonctions.php';
 
-$role    = $_SESSION['user_role'] ?? '';
-$nomUser = $_SESSION['user_nom']  ?? '';
+$role      = $_SESSION['user_role'] ?? '';
+$nomUser   = $_SESSION['user_nom']  ?? '';
 $nbAlertes  = 0;
 $nbMessages = 0;
 
 if (isset($_SESSION['user_id'])) {
     require_once __DIR__ . '/../db/connexion.php';
-    require_once __DIR__ . '/../includes/messagerie.php';
+    require_once __DIR__ . '/messagerie.php';
     if ($role === 'patient') {
-        $nbAlertes  = getNbAlertesNonLues((int) $_SESSION['user_id']);
+        $nbAlertes = getNbAlertesNonLues((int) $_SESSION['user_id']);
     }
     $nbMessages = getNbMessagesNonLus((int) $_SESSION['user_id'], $role);
 }
@@ -23,55 +31,39 @@ if (isset($_SESSION['user_id'])) {
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= esc($pageTitle ?? 'SanteLink') ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title><?= esc($pageTitle ?? 'DiabSuivi') ?></title>
     <link rel="stylesheet" href="/assets/css/style.css">
+
+    <!-- PWA : manifest et icônes -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1D9E75">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DiabSuivi">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+
     <!-- Content Security Policy -->
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';">
+          content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';">
 </head>
 <body>
 
 <?php if (estConnecte()): ?>
 <nav class="navbar">
     <a href="/<?= $role ?>/dashboard.php" class="nav-brand">
-        <span class="nav-logo">♥</span> SanteLink
+        <span class="nav-logo">♥</span> DiabSuivi
     </a>
     <div class="nav-links">
-        <?php if ($role === 'patient'): ?>
-            <a href="/patient/dashboard.php"   class="nav-link">🏠 Accueil</a>
-            <a href="/patient/mesure_form.php" class="nav-link">➕ Mesure</a>
-            <a href="/patient/historique.php"  class="nav-link">📈 Historique</a>
-            <a href="/patient/alertes.php"     class="nav-link">
-                🔔 Alertes
-                <?php if ($nbAlertes > 0): ?>
-                    <span class="badge badge-danger badge-sm"><?= $nbAlertes ?></span>
-                <?php endif; ?>
-            </a>
-            <a href="/patient/traitements.php" class="nav-link">💊 Traitements</a>
-            <a href="/patient/ia_risque.php"   class="nav-link">🤖 IA Risque</a>
-            <a href="/messagerie/boite.php"    class="nav-link">
-                💬 Messages
-                <?php if ($nbMessages > 0): ?>
-                    <span class="badge badge-danger badge-sm"><?= $nbMessages ?></span>
-                <?php endif; ?>
-            </a>
-            <a href="/patient/rapport.php"                   class="nav-link">📄 Rapport</a>
-            <a href="/patient/rappels.php"                        class="nav-link">⏰ Rappels</a>
-            <a href="/patient/preferences_notifications.php" class="nav-link">⚙️ Notifs</a>
-            <a href="/patient/securite.php"                  class="nav-link">🔒 Sécurité</a>
-
-        <?php elseif ($role === 'medecin'): ?>
-            <a href="/medecin/dashboard.php"    class="nav-link">🏠 Accueil</a>
-            <a href="/messagerie/boite.php"    class="nav-link">
-                💬 Messages
-                <?php if ($nbMessages > 0): ?>
-                    <span class="badge badge-danger badge-sm"><?= $nbMessages ?></span>
-                <?php endif; ?>
-            </a>
-            <a href="/medecin/alertes.php"      class="nav-link">🔔 Alertes</a>
-            <a href="/medecin/ordonnances.php"  class="nav-link">📋 Ordonnances</a>
-        <?php endif; ?>
+        <?php
+        // Délégation au fichier de nav dédié au rôle courant.
+        // $nbAlertes et $nbMessages sont disponibles dans le scope inclus.
+        $navFile = __DIR__ . "/nav/{$role}.php";
+        if (file_exists($navFile)) {
+            require $navFile;
+        }
+        ?>
     </div>
     <div class="nav-user">
         <span class="nav-username">👤 <?= esc($nomUser) ?></span>
